@@ -10,6 +10,7 @@ media_folder: "uploads" # Media files will be stored in the repo under images/up
 
 collections:
   - name: "piano"
+    identifier_field: name
     label: "Piano"
     folder: "_posts/piano"
     create: true
