@@ -152,8 +152,39 @@ body {
   position: absolute;
   right: 50px;
   bottom: 80px;
-  padding: 50px;
-  background: #ffffffaa;
+  padding: 30px;
+  background: #000000aa;
+  box-shadow: 0 0 10px;
+  width: 350px;
+}
+
+.form-field-title {
+  color: #fff;
+}
+
+.form-field-input {
+  background: none;
+  border: none;
+  border-bottom: 1px solid #fff;
+  width: 100%;
+  color: #fff;
+  outline: none;
+  margin-top: 6px;
+  font-size: 16px;
+  margin-bottom: 10px;
+  padding-bottom: 5px;
+}
+
+.submit-a-piano .uploadcare--widget__button {
+  border-radius: 0;
+  background: none;
+  border: 1px solid #fff;
+  margin-top: 10px;
+}
+.submit-a-piano .button-submit {
+  margin-top: 20px;
+  font-size: 14px;
+  padding: 4px 20px;
 }
 
 @media screen and (max-width: 1280px) {
@@ -206,6 +237,11 @@ body {
     background-image: none;
     padding-left: 0;
   }
+}
+/* Overwrite Uploadcare's Looking */
+.uploadcare--button,
+.uploadcare--dialog__container {
+  border-radius: 0;
 }
 
 /*# sourceMappingURL=style.css.map */
