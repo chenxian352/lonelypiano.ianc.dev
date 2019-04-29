@@ -5,7 +5,6 @@
     <title>Lonely Piano - Find pianos on street, in train station, by beach ...</title>
     <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
     <link rel="stylesheet" href="style.css">
-    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
 <body>
 <div class="main-wrapper">
@@ -28,7 +27,7 @@
                         Submit another piano!
                     </div>
                     <div class="update-piano icon-left cursor-pointer">
-                        Update this piano
+                        <a href="mailto:me@ianc.dev?subject=Update Piano: 127 King Street, Christchurch Center&body=Hey Lonely Piano, I found the listing for the piano at 127 King Street, Christchurch Center needs to be updated. Here's right information:">Update this piano</a>
                     </div>
                 </div>
             </div>
@@ -65,7 +64,7 @@
             <p>
                 <label>
                     <div class="form-field-title">Your Name</div>
-                    <input type="text" name="submitter" class="form-field-input" placeholder="Just want to credit to you!">
+                    <input type="text" name="creator" class="form-field-input" placeholder="Just want to credit to you!">
                 </label>
             </p>
             <script>
@@ -79,7 +78,7 @@
             <div data-netlify-recaptcha="true"></div>
             <p>
                 <div class="form-field-title">Picture of the piano</div>
-                <input type="hidden" role="uploadcare-uploader" data-image-shrink="2000x2000"/>
+                <input type="hidden" role="uploadcare-uploader" data-image-shrink="2000x2000" name="u-image-url"/>
             </p>
             <p>
                 <button type="submit" class="button-submit">Send</button>
@@ -88,16 +87,5 @@
     </div>
 </div>
 <script src="script.js" type="text/javascript"></script>
-<script>
-  if (window.netlifyIdentity) {
-    window.netlifyIdentity.on("init", user => {
-      if (!user) {
-        window.netlifyIdentity.on("login", () => {
-          document.location.href = "/admin/";
-        });
-      }
-    });
-  }
-</script>
 </body>
 </html>
