@@ -21,7 +21,7 @@ import Pianos from './components/Pianos'
 import SubmitPopup from './components/SubmitPopup'
 
 export default {
-  name: 'app',
+  name: 'App',
   components: {
     Pianos,
     SubmitPopup

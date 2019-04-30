@@ -1,6 +1,6 @@
 <template>
   <div class="popup" v-show="showSubmitPopup">
-    <form name="submit-a-piano" class="submit-a-piano" method="POST" netlify-honeypot="bot-field" data-netlify="true">
+    <form name="submit-a-piano" class="submit-a-piano" method="POST">
       <p class="hidden">
         <label>Don’t fill this out if you're human: <input name="bot-field" /></label>
       </p>
@@ -24,8 +24,10 @@
       </p>
       <div data-netlify-recaptcha="true"></div>
       <p>
-      <div class="form-field-title">Picture of the piano</div>
-      <input type="hidden" role="uploadcare-uploader" data-image-shrink="2000x2000" name="u-image-url">
+        <label>
+          <div class="form-field-title">Picture of the piano</div>
+          <input type="hidden" role="uploadcare-uploader" data-image-shrink="2000x2000" name="u-image-url">
+        </label>
       </p>
       <p>
         <button type="submit" class="button-submit">Send</button>
@@ -44,7 +46,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-
-</style>
