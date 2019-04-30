@@ -1,7 +1,7 @@
 <template>
-  <div class="slides">
-    <slick ref="slick" :options="slickOptions">
-      <div class="slide-wrapper" v-for="piano in pianos" :key="piano.id">
+  <div class="slides" @click.prevent.stop="clickSlideWrapper">
+    <transition name="piano-transition" mode="out-in">
+      <div class="slide-wrapper" v-if="piano.id === currentPianoId" v-for="piano in pianos" :key="piano.id">
         <img :src="piano.uImageUrl" alt="">
         <div class="footer-gradient"></div>
         <div class="slide-info">
@@ -24,44 +24,19 @@
           </div>
         </div>
       </div>
-    </slick>
+    </transition>
   </div>
 </template>
 
 <script>
 import gql from 'graphql-tag'
-import Slick from 'vue-slick';
 
 export default {
   name: 'Pianos',
-  components: {
-    Slick
-  },
-  apollo: {
-    pianos: gql(`
-      query {
-        pianos(where: {
-          status: PUBLISHED
-        }) {
-          id
-          address
-          locationDesc
-          creator
-          uImageUrl
-          pianoStatus
-          updates
-          youTubeVideoUrl
-        }
-      }
-    `),
-  },
   data: function() {
     return {
-      pianos: [],
-      slickOptions: {
-        slidesToShow: 1,
-        fade: true
-      },
+      currentPianoId: null,
+      isTransitioning: false
     }
   },
   methods: {
@@ -70,6 +45,53 @@ export default {
     },
     mailtoUrl: function(address) {
       return `mailto:me@ianc.dev?subject=Update Piano: ${address} &body=Hey Lonely Piano, I found the listing for the piano at ${address} needs to be updated. Here\'s right information:`;
+    },
+    clickSlideWrapper: function() {
+      const self = this;
+      if (!this.isTransitioning) {
+        for (const item of this.pianos) {
+          if (this.currentPianoId !== item.id) {
+            this.currentPianoId = item.id;
+            this.isTransitioning = true;
+            setTimeout(function() {
+              self.isTransitioning = false;
+            }, 4000);
+            break;
+          }
+        }
+      }
+
+    }
+  },
+  created: function() {
+    this.$apollo.addSmartQuery('pianos', {
+      query: gql(`
+        query {
+          pianos(where: {
+            status: PUBLISHED
+          }) {
+            id
+            address
+            locationDesc
+            creator
+            uImageUrl
+            pianoStatus
+            updates
+            youTubeVideoUrl
+            lng
+            lat
+          }
+        }
+      `),
+      update(data) {
+        this.$store.commit('updatePianos', data.pianos);
+        this.currentPianoId = this.$store.state.pianos[0]['id'];
+      }
+    });
+  },
+  computed: {
+    pianos: function() {
+      return this.$store.state.pianos;
     }
   }
 }
