@@ -35,7 +35,6 @@ export default {
   name: 'Pianos',
   data: function() {
     return {
-      currentPianoId: null,
       isTransitioning: false
     }
   },
@@ -51,7 +50,7 @@ export default {
       if (!this.isTransitioning) {
         for (const item of this.pianos) {
           if (this.currentPianoId !== item.id) {
-            this.currentPianoId = item.id;
+            this.$store.commit('updateCurrentPianoId', item.id);
             this.isTransitioning = true;
             setTimeout(function() {
               self.isTransitioning = false;
@@ -60,7 +59,6 @@ export default {
           }
         }
       }
-
     }
   },
   created: function() {
@@ -85,13 +83,16 @@ export default {
       `),
       update(data) {
         this.$store.commit('updatePianos', data.pianos);
-        this.currentPianoId = this.$store.state.pianos[0]['id'];
+        this.$store.commit('updateCurrentPianoId', this.$store.state.pianos[0]['id']);
       }
     });
   },
   computed: {
     pianos: function() {
       return this.$store.state.pianos;
+    },
+    currentPianoId: function() {
+      return this.$store.state.currentPianoId;
     }
   }
 }

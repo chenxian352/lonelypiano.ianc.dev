@@ -14,7 +14,8 @@
                     :map-options="mapboxConfig.options"
                     :fullscreen-control="{ show: true, position: 'top-left' }"
                     @map-load="loadMapboxLoaded"
-                    @map-click="clickMapbox">
+                    @map-click="mapMouseClicked"
+                    @map-mousemove="mapMouseMoved">
             </Mapbox>
           </div>
         </div>
@@ -43,8 +44,8 @@ export default {
         accessToken: 'pk.eyJ1IjoiaWFuYzM1MiIsImEiOiJjanYzczJhOHQyamljNDNwZnE5c3JuNTVrIn0.GQqGbFJ3c5js87MBtsrF-Q',
         options: {
           style: 'mapbox://styles/ianc352/cjtdtg3pp4b5x1fjpehjb0l46',
-          center: [-122.403944, 37.784020],
-          zoom: 5.4,
+          center: [173.444,-40.857],
+          zoom: 3.8,
         },
         display: false
       }
@@ -52,14 +53,58 @@ export default {
   },
   methods: {
     loadMapboxLoaded: function(map) {
+      const pianos = this.$store.state.pianos;
+      const features = pianos.map(piano => {
+        return {
+          'type': 'Feature',
+          'geometry': {
+            'type': 'Point',
+            'coordinates': [piano.lng, piano.lat]
+          },
+          'properties': {
+            'title': 'Piano',
+            'icon': 'monument',
+            'pianoId': piano.id
+          }
+        }
+      });
 
+      console.log(features);
+
+      map.addLayer({
+        'id': 'points',
+        'type': 'symbol',
+        'source': {
+          'type': 'geojson',
+          'data': {
+            'type': 'FeatureCollection',
+            'features': features
+          }
+        },
+        'layout': {
+          'icon-image': '{icon}-15',
+          'text-field': '{title}',
+          'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
+          'text-offset': [0, 0.6],
+          'text-anchor': 'top'
+        }
+      });
     },
-    clickMapbox: function(map, e) {
-
+    mapMouseClicked: function(map, e) {
+      const features = map.queryRenderedFeatures(e.point, {
+        layers: ['points']
+      });
+      this.$store.commit('updateCurrentPianoId', features[0].properties.pianoId);
     },
     clickAddressInput: function() {
       this.mapboxConfig.display = !this.mapboxConfig.display;
     },
+    mapMouseMoved(map, e) {
+      const features = map.queryRenderedFeatures(e.point, {
+        layers: ['points']
+      });
+      map.getCanvas().style.cursor = (features.length) ? 'pointer' : '';
+    }
   }
 }
 </script>

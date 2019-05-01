@@ -7,7 +7,7 @@ export default new Vuex.Store({
   state: {
     showSubmitPopup: false,
     pianos: [],
-    map: null
+    currentPianoId: ''
   },
   mutations: {
     toggleSubmitPopup: function(state) {
@@ -15,6 +15,9 @@ export default new Vuex.Store({
     },
     updatePianos: function(state, value) {
       state.pianos = value;
+    },
+    updateCurrentPianoId: function(state, value) {
+      state.currentPianoId = value;
     }
   },
   actions: {
