@@ -69,8 +69,6 @@ export default {
         }
       });
 
-      console.log(features);
-
       map.addLayer({
         'id': 'points',
         'type': 'symbol',

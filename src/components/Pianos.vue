@@ -1,5 +1,5 @@
 <template>
-  <div class="slides" @click.prevent.stop="clickSlideWrapper">
+  <div class="slides" @click="clickSlideWrapper">
     <transition name="piano-transition" mode="out-in">
       <div class="slide-wrapper" v-if="piano.id === currentPianoId" v-for="piano in pianos" :key="piano.id">
         <img :src="piano.uImageUrl" alt="">
