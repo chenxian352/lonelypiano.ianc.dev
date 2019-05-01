@@ -15,9 +15,6 @@ export default new Vuex.Store({
     },
     updatePianos: function(state, value) {
       state.pianos = value;
-    },
-    assignMap: function(state, value) {
-      state.map = value;
     }
   },
   actions: {

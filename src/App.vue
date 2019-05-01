@@ -6,17 +6,17 @@
         <div class="logo"></div>
         <div class="search">
           <div class="address-complete">
-            <input type="text" class="address-input" placeholder="Look for a piano" ref="autocomplete" @click="mapbox.display = !mapbox.display">
+            <input type="text" class="address-input" placeholder="Look for a piano" ref="autocomplete" @click="clickAddressInput">
           </div>
-          <MglMap
-                  :accessToken="mapbox.accessToken"
-                  :mapStyle="mapbox.style"
-                  :id="'map-container'"
-                  v-show="mapbox.display"
-                  @load="loadMapLoaded"
-          >
-            <MglMarker :coordinates="[piano.lng, piano.lat]" color="blue" v-for="piano in this.$store.state.pianos"/>
-          </MglMap>
+          <div id="map-container" :class="mapboxConfig.display ? '' : 'hidden-v'">
+            <Mapbox
+                    :accessToken="mapboxConfig.accessToken"
+                    :map-options="mapboxConfig.options"
+                    :fullscreen-control="{ show: true, position: 'top-left' }"
+                    @map-load="loadMapboxLoaded"
+                    @map-click="clickMapbox">
+            </Mapbox>
+          </div>
         </div>
       </div>
     </div>
@@ -28,32 +28,38 @@
 <script>
 import Pianos from './components/Pianos'
 import SubmitPopup from './components/SubmitPopup'
-import { MglMap, MglMarker } from "vue-mapbox";
+import Mapbox from 'mapbox-gl-vue';
 
 export default {
   name: 'App',
   components: {
     Pianos,
     SubmitPopup,
-    MglMap,
-    MglMarker
+    Mapbox
   },
   data: function() {
     return {
-      mapbox: {
+      mapboxConfig: {
         accessToken: 'pk.eyJ1IjoiaWFuYzM1MiIsImEiOiJjanYzczJhOHQyamljNDNwZnE5c3JuNTVrIn0.GQqGbFJ3c5js87MBtsrF-Q',
-        container: 'map',
-        style: 'mapbox://styles/ianc352/cjtdtg3pp4b5x1fjpehjb0l46',
-        center: [-122.403944, 37.784020],
-        zoom: 13.6,
+        options: {
+          style: 'mapbox://styles/ianc352/cjtdtg3pp4b5x1fjpehjb0l46',
+          center: [-122.403944, 37.784020],
+          zoom: 5.4,
+        },
         display: false
       }
     }
   },
   methods: {
-    loadMapLoaded: function(event) {
-      this.$store.commit('assignMap', event.map);
-    }
+    loadMapboxLoaded: function(map) {
+
+    },
+    clickMapbox: function(map, e) {
+
+    },
+    clickAddressInput: function() {
+      this.mapboxConfig.display = !this.mapboxConfig.display;
+    },
   }
 }
 </script>
