@@ -41,7 +41,7 @@ export default {
   data: function() {
     return {
       mapboxConfig: {
-        accessToken: 'pk.eyJ1IjoiaWFuYzM1MiIsImEiOiJjanYzczJhOHQyamljNDNwZnE5c3JuNTVrIn0.GQqGbFJ3c5js87MBtsrF-Q',
+        accessToken: 'pk.eyJ1IjoiaWFuYzM1MiIsImEiOiJjanY1cmNqZWMwMG92M3lueDg5Zjh2MGJ1In0.Hb4-bpZXe8PEQcuYu4zpng',
         options: {
           style: 'mapbox://styles/ianc352/cjtdtg3pp4b5x1fjpehjb0l46',
           center: [173.444,-40.857],
@@ -63,7 +63,7 @@ export default {
           },
           'properties': {
             'title': 'Piano',
-            'icon': 'monument',
+            'icon': 'mapbox-piano',
             'pianoId': piano.id
           }
         }
