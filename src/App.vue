@@ -8,7 +8,7 @@
           <div class="address-complete">
             <input type="text" class="address-input" placeholder="Look for a piano" ref="autocomplete" @click="clickAddressInput">
           </div>
-          <div id="map-container" :class="mapboxConfig.display ? '' : 'hidden-v'">
+          <div id="map-container" :class="mapboxConfig.display ? '' : 'hidden-v'" v-if="this.$store.state.pianos.length > 0">
             <Mapbox
                     :accessToken="mapboxConfig.accessToken"
                     :map-options="mapboxConfig.options"
@@ -42,7 +42,7 @@ export default {
   data: function() {
     return {
       mapboxConfig: {
-        accessToken: 'pk.eyJ1IjoiaWFuYzM1MiIsImEiOiJjanY1cmNqZWMwMG92M3lueDg5Zjh2MGJ1In0.Hb4-bpZXe8PEQcuYu4zpng',
+        accessToken: 'pk.eyJ1IjoiaWFuYzM1MiIsImEiOiJjanYzczJhOHQyamljNDNwZnE5c3JuNTVrIn0.GQqGbFJ3c5js87MBtsrF-Q',
         options: {
           style: 'mapbox://styles/ianc352/cjtdtg3pp4b5x1fjpehjb0l46',
           center: [173.444,-40.857],
@@ -55,6 +55,8 @@ export default {
   methods: {
     loadMapboxLoaded: function(map) {
       const pianos = this.$store.state.pianos;
+      console.log('Pianos when map loaded:');
+      console.log(pianos);
       const features = pianos.map(piano => {
         return {
           'type': 'Feature',
