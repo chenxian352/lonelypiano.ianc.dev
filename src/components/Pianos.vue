@@ -29,8 +29,6 @@
 </template>
 
 <script>
-import gql from 'graphql-tag'
-
 export default {
   name: 'Pianos',
   data: function() {
@@ -60,32 +58,6 @@ export default {
         }
       }
     }
-  },
-  created: function() {
-    this.$apollo.addSmartQuery('pianos', {
-      query: gql(`
-        query {
-          pianos(where: {
-            status: PUBLISHED
-          }) {
-            id
-            address
-            locationDesc
-            creator
-            uImageUrl
-            pianoStatus
-            updates
-            youTubeVideoUrl
-            lng
-            lat
-          }
-        }
-      `),
-      update(data) {
-        this.$store.commit('updatePianos', data.pianos);
-        this.$store.commit('updateCurrentPianoId', this.$store.state.pianos[0]['id']);
-      }
-    });
   },
   computed: {
     pianos: function() {

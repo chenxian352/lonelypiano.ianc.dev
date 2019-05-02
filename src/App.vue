@@ -31,6 +31,7 @@ import Pianos from './components/Pianos'
 import SubmitPopup from './components/SubmitPopup'
 import Mapbox from 'mapbox-gl-vue';
 
+import gql from 'graphql-tag'
 export default {
   name: 'App',
   components: {
@@ -103,6 +104,32 @@ export default {
       });
       map.getCanvas().style.cursor = (features.length) ? 'pointer' : '';
     }
+  },
+  created: function() {
+    this.$apollo.addSmartQuery('pianos', {
+      query: gql(`
+        query {
+          pianos(where: {
+            status: PUBLISHED
+          }) {
+            id
+            address
+            locationDesc
+            creator
+            uImageUrl
+            pianoStatus
+            updates
+            youTubeVideoUrl
+            lng
+            lat
+          }
+        }
+      `),
+      update(data) {
+        this.$store.commit('updatePianos', data.pianos);
+        this.$store.commit('updateCurrentPianoId', this.$store.state.pianos[0]['id']);
+      }
+    });
   }
 }
 </script>
