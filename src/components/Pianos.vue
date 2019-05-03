@@ -15,7 +15,7 @@
             Credit to {{ piano.creator }}
           </div>
           <div class="listing-control">
-            <div class="submit-piano icon-left cursor-pointer" @click="clickSubmitPiano">
+            <div class="submit-piano icon-left cursor-pointer" @click.stop="clickSubmitPiano">
               Submit another piano!
             </div>
             <div class="update-piano icon-left cursor-pointer">

@@ -1,5 +1,6 @@
 <template>
   <div class="popup" v-show="showSubmitPopup">
+    <div class="close-form" @click="clickCloseForm">X</div>
     <form
             subject="New Piano Submission"
             name="submit-a-piano"
@@ -55,6 +56,11 @@ export default {
   computed: {
     showSubmitPopup: function() {
       return this.$store.state.showSubmitPopup;
+    }
+  },
+  methods: {
+    clickCloseForm: function() {
+      this.$store.commit('toggleSubmitPopup');
     }
   }
 }

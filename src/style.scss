@@ -88,7 +88,13 @@ body {
   box-shadow: 0 0 10px;
   width: 450px;
 }
-
+.close-form {
+  position: absolute;
+  color: #fff;
+  right: 30px;
+  font-size: 20px;
+  cursor: pointer;
+}
 .form-field-title {
   color: #fff;
 }
